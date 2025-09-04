@@ -1,8 +1,12 @@
+import FriendsList from "./components/FriendsList";
+
 function App() {
   return (
-    <>
-      <h1>React test!</h1>
-    </>
+    <main className="app">
+      <section className="sidebar">
+        <FriendsList />
+      </section>
+    </main>
   );
 }
 
