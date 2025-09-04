@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Button from "./Button";
 
 function Friend({ friend: { name, image, balance } }) {
   function showBalance() {
@@ -24,7 +25,7 @@ function Friend({ friend: { name, image, balance } }) {
       <img src={image} alt={name} />
       <h3>{name}</h3>
       {showBalance()}
-      <button className="button">Select</button>
+      <Button>Select</Button>
     </li>
   );
 }
