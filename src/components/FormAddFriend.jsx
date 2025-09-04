@@ -4,7 +4,7 @@ function FormAddFriend() {
   return (
     <form className="form-add-friend">
       <label htmlFor="name">🧑🏻‍🤝‍👩🏼 Name</label>
-      <input type="text" id="name" />
+      <input type="text" id="name" autoComplete="false" />
       <label htmlFor="image">🖼️ Image URL</label>
       <input type="text" id="image" />
       <Button>Add</Button>
