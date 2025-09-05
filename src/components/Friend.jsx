@@ -1,7 +1,22 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
 
-function Friend({ friend: { name, image, balance } }) {
+function Friend({
+  friend: { id, name, image, balance },
+  selectedFriend,
+  onSelection,
+}) {
+  const friend = { id, name, image, balance };
+  const isSelected = selectedFriend?.id === id;
+
+  function handleClass() {
+    return isSelected ? "selected" : "";
+  }
+
+  function showLabel() {
+    return isSelected ? "Close" : "Select";
+  }
+
   function showBalance() {
     if (balance < 0) {
       return (
@@ -21,11 +36,11 @@ function Friend({ friend: { name, image, balance } }) {
   }
 
   return (
-    <li>
+    <li className={handleClass()}>
       <img src={image} alt={name} />
       <h3>{name}</h3>
       {showBalance()}
-      <Button>Select</Button>
+      <Button onClick={() => onSelection(friend)}>{showLabel()}</Button>
     </li>
   );
 }
@@ -34,6 +49,7 @@ Friend.propTypes = {
   friend: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ),
-};
+  onSelection: PropTypes.func,
+}.isRequired;
 
 export default Friend;
