@@ -1,9 +1,7 @@
-import friendsList from "../assets/data/friendsList";
+import PropTypes, { object } from "prop-types";
 import Friend from "./Friend";
 
-function FriendsList() {
-  const friends = friendsList;
-
+function FriendsList({ friends }) {
   return (
     <ul>
       {friends.map((friend, index) => (
@@ -12,5 +10,9 @@ function FriendsList() {
     </ul>
   );
 }
+
+FriendsList.propTypes = {
+  friends: PropTypes.arrayOf(object).isRequired,
+};
 
 export default FriendsList;
