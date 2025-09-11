@@ -3,22 +3,30 @@ import PropTypes from "prop-types";
 
 import Button from "./Button";
 
-function FormSplitBill({ selectedFriend: { name } }) {
+function FormSplitBill({ selectedFriend: { name }, onSplitBill }) {
   const [bill, setBill] = useState("");
-  const [paidByuser, setPaidByUser] = useState("");
+  const [paidByUser, setPaidByUser] = useState("");
   const [whoIsPaying, setWhoIsPaying] = useState("User");
 
-  const paidByFriend = bill ? bill - paidByuser : "";
+  const paidByFriend = bill ? bill - paidByUser : "";
 
   function handleInput({ target: { value, id } }) {
     if (id === "bill") setBill(Number(value));
     else if (id === "user")
-      setPaidByUser(Number(value) > bill ? paidByuser : Number(value));
+      setPaidByUser(Number(value) > bill ? paidByUser : Number(value));
     else if (id === "payer") setWhoIsPaying(value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault;
+
+    if (!bill || !paidByUser) return;
+
+    onSplitBill(whoIsPaying === "user" ? paidByFriend : -paidByUser);
+  }
+
   return (
-    <form className="form-split-bill">
+    <form className="form-split-bill" onSubmit={handleSubmit}>
       <h2>Split a bill with {name}</h2>
       <label htmlFor="bill">💰 Bill value</label>
       <input
@@ -31,7 +39,7 @@ function FormSplitBill({ selectedFriend: { name } }) {
       <input
         type="text"
         id="user"
-        value={paidByuser}
+        value={paidByUser}
         onChange={(event) => handleInput(event)}
       />
       <label htmlFor="friend">🧑🏻‍🤝‍👩🏼 {name}&apos;s expense</label>
@@ -54,7 +62,8 @@ function FormSplitBill({ selectedFriend: { name } }) {
 FormSplitBill.propTypes = {
   selectedFriend: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ).isRequired,
-};
+  ),
+  onSplitBill: PropTypes.func,
+}.isRequired;
 
 export default FormSplitBill;
